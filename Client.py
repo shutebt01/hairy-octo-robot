@@ -57,7 +57,7 @@ class OutputThread(threading.Thread):
                 print(array[1] + " (" + array[2] + "):" + array[3])
             elif array[0] == "Event":
                 if array[3] == "pm" and array[4] == name:
-                    print(array[1] + " (" + array[2] + ") -> You" + array[5])
+                    print(array[1] + " (" + array[2] + ") -> You: " + array[5])
             
 Inp = InputThread()
 Inp.start()
