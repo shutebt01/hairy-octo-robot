@@ -28,18 +28,20 @@ class InputThread(threading.Thread):
             inp = input()
             data = None
             if not(inp.startswith('!')):
+                #assumes its a message if not a command
                 data = json.dumps(["Message", name, room, inp])
             else:
                 # Creates initial packet with data for tracking
                 packet = ["Event", name, room]
-                if inp.startswith("!pm"):
-                    split = inp.split(' ', 1)
+                split = inp.split(' ', 1)
+                if split[0] == "!pm":
+                    pmsplit = split.split(' ', 1)
                     #TODO implement better validation
                     if (len(split) == 2):
                         #Adds data to packet
-                        packet[3] = "pm"
-                        packet[4] = split[0]
-                        packet[5] = split[1]
+                        packet.append("pm")
+                        packet.append(pmsplit[0])
+                        packet.append(pmsplit[1])
                 data = json.dumps(packet)
             s.send(data.encode("ascii"))
 
@@ -54,7 +56,7 @@ class OutputThread(threading.Thread):
             if array[0] == "Message":
                 print(array[1] + " (" + array[2] + "):" + array[3])
             elif array[0] == "Event":
-                if array[3] == "pm":
+                if array[3] == "pm" and array[4] == name:
                     print(array[1] + " (" + array[2] + ") -> You" + array[5])
             
 Inp = InputThread()
