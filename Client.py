@@ -21,7 +21,11 @@ class InputThread(threading.Thread):
     def input(self):
         while True:
             inp = input()
-            data = json.dumps(["Message", name, room, inp])
+            data = None
+            if not(inp.startswith("!")):
+                data = json.dumps(["Message", name, room, inp])
+            else:
+                pass
             s.send(data.encode("ascii"))
 
 class OutputThread(threading.Thread):
