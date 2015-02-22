@@ -35,7 +35,7 @@ class InputThread(threading.Thread):
                 packet = ["Event", name, room]
                 split = inp.split(' ', 1)
                 if split[0] == "!pm":
-                    pmsplit = split.split(' ', 1)
+                    pmsplit = split[1].split(' ', 1)
                     #TODO implement better validation
                     if (len(split) == 2):
                         #Adds data to packet
