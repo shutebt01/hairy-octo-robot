@@ -61,6 +61,16 @@ class DataThread(threading.Thread):
                             c.send(dat)
                         except:
                             c.close()
+            elif string[0] == "Event":
+                if (string[3] != ""):
+                    print("Data (" + dat.decode("ascii") + ")")
+                    with open("Log.log", "a") as myfile:
+                        myfile.write("\nData: " + dat.decode("ascii"))
+                    for c in clients:
+                        try:
+                            c.send(dat)
+                        except:
+                            c.close()
             #except:
                 #pass
  
